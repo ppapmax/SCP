@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>OBJECT-03</title>
+
+<style>
+html, body {
+  margin: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background: #050505;
+  color: #e8e8e8;
+  font-family: "Times New Roman", "Noto Serif TC", serif;
+}
+
+body {
+  background-image: url("background.jpg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.72);
+  z-index: 1;
+}
+
+.noise {
+  position: fixed;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+  opacity: 0.18;
+  background-image: repeating-linear-gradient(
+    0deg,
+    rgba(255,255,255,0.05) 0px,
+    rgba(255,255,255,0.05) 1px,
+    transparent 1px,
+    transparent 4px
+  );
+}
+
+.ui {
+  position: fixed;
+  inset: 0;
+  z-index: 3;
+  padding: 24px;
+  box-sizing: border-box;
+  color: #aaa;
+  font-family: monospace;
+  font-size: 14px;
+  letter-spacing: 1px;
+}
+
+.rec {
+  position: absolute;
+  top: 24px;
+  right: 24px;
+  color: #ff2a2a;
+}
+
+.container {
+  position: relative;
+  z-index: 4;
+  width: 86%;
+  max-width: 900px;
+  height: 100%;
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.log {
+  font-size: 18px;
+  letter-spacing: 4px;
+  color: #888;
+  margin-bottom: 28px;
+  font-family: monospace;
+}
+
+.text {
+  font-size: clamp(28px, 5vw, 58px);
+  line-height: 1.38;
+  letter-spacing: 2px;
+  opacity: 0;
+  transition: opacity 0.7s ease;
+}
+
+.text.show {
+  opacity: 1;
+}
+
+.warning {
+  color: #ff2a2a;
+}
+
+.cursor {
+  display: inline-block;
+  width: 10px;
+  height: 1em;
+  background: #e8e8e8;
+  margin-left: 8px;
+  animation: blink 1s infinite;
+  vertical-align: -4px;
+}
+
+@keyframes blink {
+  0%, 50% { opacity: 1; }
+  51%, 100% { opacity: 0; }
+}
+</style>
+</head>
+
+<body>
+<div class="overlay"></div>
+<div class="noise"></div>
+
+<div class="ui">
+  <div>CAM-03 // ARCHIVE OBJECT-03</div>
+  <div id="time">02:14:11</div>
+  <div class="rec">● REC</div>
+</div>
+
+<div class="container">
+  <div class="log" id="log">OBSERVATION LOG 01</div>
+  <div class="text" id="text"></div>
+</div>
+
+<script>
+const entries = [
+  ["OBSERVATION LOG 01", "OBJECT-03 recovered.<br>No abnormal behavior observed."],
+  ["OBSERVATION LOG 02", "The necktie appears longer than initial measurements."],
+  ["OBSERVATION LOG 03", "No personnel reported touching the object."],
+  ["OBSERVATION LOG 04", "Growth continued during unmonitored periods."],
+  ["OBSERVATION LOG 05", "Surveillance footage contains unexplained frame loss."],
+  ["OBSERVATION LOG 06", "The necktie extended 7.4 cm overnight."],
+  ["OBSERVATION LOG 07", "Direct observation appears to alter behavior."],
+  ["OBSERVATION LOG 08", "The object no longer matches previous documentation."],
+  ["OBSERVATION LOG 09", "Unauthorized growth detected."],
+  ["OBSERVATION LOG 10", "<span class='warning'>EMERGENCY PROTOCOLS INITIATED.</span>"],
+  ["OBSERVATION LOG 11", "<span class='warning'>CONTAINMENT FAILED.</span>"],
+  ["OBSERVATION LOG 12", "Recording terminated."]
+];
+
+const logEl = document.getElementById("log");
+const textEl = document.getElementById("text");
+const timeEl = document.getElementById("time");
+
+let index = 0;
+let seconds = 11;
+
+function showEntry() {
+  textEl.classList.remove("show");
+
+  setTimeout(() => {
+    logEl.textContent = entries[index][0];
+    textEl.innerHTML = entries[index][1] + "<span class='cursor'></span>";
+    textEl.classList.add("show");
+
+    seconds += 3;
+    timeEl.textContent = "02:14:" + String(seconds).padStart(2, "0");
+
+    index = (index + 1) % entries.length;
+  }, 500);
+}
+
+showEntry();
+setInterval(showEntry, 3000);
+</script>
+</body>
+</html>
