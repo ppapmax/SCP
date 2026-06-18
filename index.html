@@ -76,12 +76,10 @@ body {
   max-width: 1000px;
   height: 100%;
   margin: auto;
-
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-
   text-align: center;
 }
 
@@ -97,11 +95,9 @@ body {
   line-height: 1.5;
   letter-spacing: 2px;
   color: #ffffff;
-
   text-shadow:
     0 0 10px rgba(255,255,255,0.4),
     0 0 20px rgba(255,255,255,0.2);
-
   opacity: 0;
   transition: opacity 1s ease;
 }
@@ -113,26 +109,56 @@ body {
 .warning {
   color: #ff2a2a;
   font-size: 1.5em;
-
   text-shadow:
     0 0 10px rgba(255,0,0,0.8),
     0 0 30px rgba(255,0,0,0.6);
 }
 
-.tap {
+#startScreen {
   position: fixed;
-  bottom: 24px;
-  left: 50%;
-  transform: translateX(-50%);
-  z-index: 5;
-  color: #777;
-  font-size: 13px;
-  letter-spacing: 2px;
+  inset: 0;
+  z-index: 999;
+  background: #000;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: #fff;
+}
+
+.startTitle {
+  font-size: clamp(34px, 8vw, 72px);
+  letter-spacing: 8px;
+  margin-bottom: 48px;
+  text-shadow:
+    0 0 12px rgba(255,255,255,0.35),
+    0 0 28px rgba(255,255,255,0.18);
+}
+
+#startBtn {
+  background: transparent;
+  color: white;
+  border: 1px solid rgba(255,255,255,0.5);
+  padding: 18px 56px;
+  font-size: 24px;
+  letter-spacing: 4px;
+  font-family: inherit;
+}
+
+#startBtn:active {
+  background: white;
+  color: black;
 }
 </style>
 </head>
 
 <body>
+
+<div id="startScreen">
+  <div class="startTitle">OBJECT-03</div>
+  <button id="startBtn">翻閱檔案</button>
+</div>
+
 <div class="overlay"></div>
 <div class="noise"></div>
 
@@ -146,8 +172,6 @@ body {
   <div class="log" id="log">檔案 01</div>
   <div class="text" id="text"></div>
 </div>
-
-<div class="tap">TAP TO ENABLE AUDIO</div>
 
 <audio id="bgm" loop>
   <source src="music.mp3" type="audio/mpeg">
@@ -171,9 +195,12 @@ const logEl = document.getElementById("log");
 const textEl = document.getElementById("text");
 const timeEl = document.getElementById("time");
 const bgm = document.getElementById("bgm");
+const startScreen = document.getElementById("startScreen");
+const startBtn = document.getElementById("startBtn");
 
 let index = 0;
 let seconds = 11;
+let intervalId = null;
 
 function showEntry() {
   textEl.classList.remove("show");
@@ -194,16 +221,20 @@ function showEntry() {
   }, 500);
 }
 
-showEntry();
-setInterval(showEntry, 6000);
+startBtn.addEventListener("click", () => {
+  startScreen.style.display = "none";
+  bgm.play().catch(() => {});
+  showEntry();
+  intervalId = setInterval(showEntry, 6000);
+});
 
-function playAudio() {
-  bgm.play();
-  document.querySelector(".tap").style.display = "none";
-}
-
-document.body.addEventListener("click", playAudio, { once: true });
-document.body.addEventListener("touchstart", playAudio, { once: true });
+startBtn.addEventListener("touchstart", () => {
+  startScreen.style.display = "none";
+  bgm.play().catch(() => {});
+  showEntry();
+  intervalId = setInterval(showEntry, 6000);
+}, { once: true });
 </script>
+
 </body>
 </html>
