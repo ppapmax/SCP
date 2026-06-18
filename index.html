@@ -6,6 +6,11 @@
 <title>OBJECT-03</title>
 
 <style>
+@font-face {
+  font-family: "MyFont";
+  src: url("myfont.ttf") format("truetype");
+}
+
 html, body {
   margin: 0;
   width: 100%;
@@ -13,7 +18,7 @@ html, body {
   overflow: hidden;
   background: #050505;
   color: #e8e8e8;
-  font-family: "Times New Roman", "Noto Serif TC", serif;
+  font-family: "MyFont", "Noto Serif TC", "Microsoft JhengHei", serif;
 }
 
 body {
@@ -52,7 +57,7 @@ body {
   padding: 24px;
   box-sizing: border-box;
   color: #aaa;
-  font-family: monospace;
+  font-family: "MyFont", monospace;
   font-size: 14px;
   letter-spacing: 1px;
 }
@@ -81,12 +86,11 @@ body {
   letter-spacing: 4px;
   color: #888;
   margin-bottom: 28px;
-  font-family: monospace;
 }
 
 .text {
   font-size: clamp(28px, 5vw, 58px);
-  line-height: 1.38;
+  line-height: 1.45;
   letter-spacing: 2px;
   opacity: 0;
   transition: opacity 0.7s ease;
@@ -122,30 +126,26 @@ body {
 <div class="noise"></div>
 
 <div class="ui">
-  <div>CAM-03 // ARCHIVE OBJECT-03</div>
+  <div>CAM-03 // OBJECT-03</div>
   <div id="time">02:14:11</div>
   <div class="rec">● REC</div>
 </div>
 
 <div class="container">
-  <div class="log" id="log">OBSERVATION LOG 01</div>
+  <div class="log" id="log">觀察紀錄 01</div>
   <div class="text" id="text"></div>
 </div>
 
 <script>
 const entries = [
-  ["OBSERVATION LOG 01", "OBJECT-03 recovered.<br>No abnormal behavior observed."],
-  ["OBSERVATION LOG 02", "The necktie appears longer than initial measurements."],
-  ["OBSERVATION LOG 03", "No personnel reported touching the object."],
-  ["OBSERVATION LOG 04", "Growth continued during unmonitored periods."],
-  ["OBSERVATION LOG 05", "Surveillance footage contains unexplained frame loss."],
-  ["OBSERVATION LOG 06", "The necktie extended 7.4 cm overnight."],
-  ["OBSERVATION LOG 07", "Direct observation appears to alter behavior."],
-  ["OBSERVATION LOG 08", "The object no longer matches previous documentation."],
-  ["OBSERVATION LOG 09", "Unauthorized growth detected."],
-  ["OBSERVATION LOG 10", "<span class='warning'>EMERGENCY PROTOCOLS INITIATED.</span>"],
-  ["OBSERVATION LOG 11", "<span class='warning'>CONTAINMENT FAILED.</span>"],
-  ["OBSERVATION LOG 12", "Recording terminated."]
+  ["觀察紀錄 01", "一件普通潔白的襯衫...嗎...嗎?"],
+  ["觀察紀錄 02", "請記住牠此時的樣子，請不要忽略任何微小的改變...拜託了..."],
+  ["觀察紀錄 03", "它只在沒有人注視的時候移動。"],
+  ["觀察紀錄 04", "你發現了嗎?"],
+  ["觀察紀錄 05", "你發現了嗎?"],
+  ["觀察紀錄 06", "你發現了嗎?"],
+  ["觀察紀錄 07", "千萬不要按求救鈕...牠會發現你"],
+  ["觀察紀錄 08", "<span class='warning'>收容失敗。</span>"]
 ];
 
 const logEl = document.getElementById("log");
@@ -163,7 +163,7 @@ function showEntry() {
     textEl.innerHTML = entries[index][1] + "<span class='cursor'></span>";
     textEl.classList.add("show");
 
-    seconds += 3;
+    seconds += 6;
     timeEl.textContent = "02:14:" + String(seconds).padStart(2, "0");
 
     index = (index + 1) % entries.length;
@@ -171,7 +171,7 @@ function showEntry() {
 }
 
 showEntry();
-setInterval(showEntry, 3000);
+setInterval(showEntry, 6000);
 </script>
 </body>
 </html>
